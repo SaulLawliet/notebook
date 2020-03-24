@@ -1,0 +1,51 @@
+#+TITLE: Spring MVC
+#+LANGUAGE: en
+#+OPTIONS: H:3 num:nil toc:t \n:nil @:t ::t |:t ^:nil -:t f:nil *:t TeX:nil LaTeX:nil skip:nil d:nil tags:not-in-toc
+
+-----
+
+不常写 SpringMVC, 在这做点记录
+
+** web.xml
+ #+BEGIN_SRC xml
+    <servlet>
+        <servlet-name>spring-mvc-app</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:spring-mvc-config.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>spring-mvc-app</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+ #+END_SRC
+
+** spring-mvc-config.xml
+#+BEGIN_SRC xml
+    <!-- 扫描注解 -->
+    <context:component-scan base-package="com.example"/>
+
+    <!-- view 配置 -->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/web/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!-- 开启 multipart-form -->
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+
+    <!-- UTF-8 编码 -->
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <constructor-arg value="UTF-8" />
+                <property name="writeAcceptCharset" value="false" /> <!-- 关闭响应头的 Accept-Charset -->
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+#+END_SRC
