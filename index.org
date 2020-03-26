@@ -15,7 +15,8 @@
   - [[file:org-mode.org][org-mode 结构]]
 - 读书笔记
   - [[file:effective-java.org][<Effective Java>]]
-  - [[file:java-concurrency-in-practice-par1.org][<Java Concurrency in Practice> - Part1: 基础部分]]
+  - [[file:java-concurrency-in-practice-part1.org][<Java Concurrency in Practice> - Part1: 基础部分]]
+  - [[file:java-concurrency-in-practice-part2.org][<Java Concurrency in Practice> - Part2: 结构化并发应用程序]]
 
 - Java 源码分析
   - [[file:java/AtomicInteger.org][AtomicInteger]]

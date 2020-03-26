@@ -1,4 +1,4 @@
-#+TITLE: <Java Concurrency in Practice> 读书笔记 - 基础部分
+#+TITLE: <Java Concurrency in Practice> 读书笔记 - Part1: 基础部分
 #+LANGUAGE: en
 #+OPTIONS: H:3 num:nil toc:t \n:t
 
