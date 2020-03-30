@@ -23,7 +23,7 @@ class X {
 * ReentrantLock 定义
 顾名思义, ReentrantLock 为重入锁, 意味着一个线程可以多次获得锁而不会阻塞, 类的基本定义如下.
 #+BEGIN_SRC java
-// ReentrantLock
+// ReentrantLock.java
 public class ReentrantLock implements Lock, java.io.Serializable {
     private final Sync sync;
     abstract static class Sync extends AbstractQueuedSynchronizer {...}
@@ -68,7 +68,7 @@ public final void acquire(int arg) {
 
 #+END_SRC
 
-tryAcquire(arg), 尝试再获取一次锁
+tryAcquire(arg), 尝试获取一次锁
 #+BEGIN_SRC java
 // AbstractQueuedSynchronizer.java
 protected boolean tryAcquire(int arg) {
@@ -153,7 +153,7 @@ private Node enq(final Node node) {
 #+END_SRC
 
 acquireQueued(addWaiter(Node.EXCLUSIVE), arg)
-独占模式下, 线程已经加入队列, 堵塞直到获取到锁或者中断
+独占模式下, 线程已经加入队列, 堵塞直到获取到锁.
 
 #+BEGIN_SRC java
 // AbstractQueuedSynchronizer.java
@@ -163,7 +163,7 @@ final boolean acquireQueued(final Node node, int arg) {
         boolean interrupted = false;
         for (;;) {
             final Node p = node.predecessor();
-            /* 上个节点是头节点并且拿到了锁, 则成功 */
+            /* 仅当上个节点是头节点并且拿到了锁, 则返回 */
             if (p == head && tryAcquire(arg)) {
                 setHead(node); /* 把当前node设置成头节点, 并清空数据, 使之成为'零值' */
                 p.next = null; // help GC
@@ -180,7 +180,7 @@ final boolean acquireQueued(final Node node, int arg) {
     }
 }
 
-/* 更新node的状态, 返回成功表示可以 park */
+/* 只有前驱节点的状态是 SIGNAL 时, 才返回 true, 表示可以 park. 否则返回 false */
 private static boolean shouldParkAfterFailedAcquire(Node pred, Node node) {
     int ws = pred.waitStatus;
     if (ws == Node.SIGNAL)
@@ -357,4 +357,4 @@ public final boolean hasQueuedPredecessors() {
 * 小结
 - 　公平锁: 加锁时检查是否有等待的线程. 如果有则排队. 保证线程的获得锁是先到先得.
 - 非公平锁: 加锁时直接尝试获取锁, 抢不到, 则排队.
-至此, ReentrantLock 的主要代码都已看完, 通过这个类, 我们也简单的了解了一下 AQS 类.
+至此, ReentrantLock 的主要代码都已看完, 通过这个类, 我们也简单的了解了一下 AQS 类的独占模式, 理解起来还是比较容易的.

@@ -59,6 +59,10 @@ public final int getAndAddInt(Object o, long offset, int delta) {
 public final native boolean compareAndSwapInt(Object o, long offset,
                                               int expected,
                                               int x);
+
+public final int get() {
+    return value;
+}
 #+END_SRC
 
 
